@@ -1,13 +1,23 @@
-TMarks:
-Browse & manipulate marks
+*tmarks.txt*        Browse & manipulate marks
+
+This plugin provides commands to browse and to manipulate (place & 
+delete) marks.
+
+Features:
+    - Browse marks
+    - Delete all (lower-case) marks in the current buffer
+    - Delete all (lower-case) marks in a range
+    - Set the next available (lower-case) mark at a specified line
 
 
-Status:
-Not in use (extracted from vimtlib)
-I'd suggest to use wokmarks instead.
+Key maps in the list view:
+    <c-d> ... Delete mark
+    <cr>  ... Jump to mark
 
 
-Install:
-See http://github.com/tomtom/vimtlib/blob/master/INSTALL.TXT
+-----------------------------------------------------------------------
 
+Extracted from http://github.com/tomtom/vimtlib
+Status:  Not in use (I wouldn't know if there were problems)
+Install: See http://github.com/tomtom/vimtlib/blob/master/INSTALL.TXT
 
