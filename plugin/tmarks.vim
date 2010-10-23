@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-08-23.
-" @Last Change: 2010-01-17.
-" @Revision:    0.0.54
+" @Last Change: 2010-10-23.
+" @Revision:    0.0.65
 " GetLatestVimScripts: <+SCRIPTID+> 1 tmarks.vim
 
 if &cp || exists("loaded_tmarks")
@@ -26,18 +26,29 @@ set cpo&vim
 command! -bar TMarks call tmarks#List()
 
 
-" " Use wokmarks instead:
-" "
-" " Place the next available a-z mark at the specified line.
-" " :display: :{range}TMarksPlace
-" command! -range -nargs=? -bar TMarksPlace call tmarks#PlaceNextMarkAtLine(<line1>)
-" 
-" " Delete all a-z marks in range.
-" " :display: :{range}TMarksDelete
-" command! -range -nargs=? -bar TMarksDelete call tmarks#DeleteInRange(<line1>, <line2>)
-" 
-" " Delete all a-z marks in the current buffer.
-" command! -bar TMarksDeleteAll call tmarks#DeleteAllMarks()
+" Place the next available a-z mark at the specified line.
+" :display: :{range}TMarkstoggle
+command! -range -nargs=? -bar TMarkstoggle call tmarks#ToggleMarkAtLine(<line1>)
+
+" Delete all a-z marks in range.
+" :display: :{range}TMarksdelete
+command! -range -nargs=? -bar TMarksdelete call tmarks#DeleteInRange(<line1>, <line2>)
+
+" Delete all a-z marks in the current buffer.
+" :display: :TMarksdeleteall
+command! -bar TMarksdeleteall call tmarks#DeleteAllMarks()
+
+" Jump to the nth prev/next mark.
+" :display: :TMarksnext
+command! -count=1 -bar TMarksnext call tmarks#Next(<count>)
+
+
+echom exists('g:tmarks_key')
+if exists('g:tmarks_key')
+    exec 'map <silent> <'. g:tmarks_key .'> :<c-u>call tmarks#Next(v:count1)<cr>'
+    exec 'map <silent> <s-'. g:tmarks_key .'> :<c-u>call tmarks#Next(-v:count1)<cr>'
+    exec 'map <silent> <c-'. g:tmarks_key .'> :call tmarks#ToggleMarkAtLine()<cr>'
+endif
 
 
 let &cpo = s:save_cpo
