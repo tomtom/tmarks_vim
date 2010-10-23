@@ -4,7 +4,7 @@
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2009-03-29.
 " @Last Change: 2010-10-23.
-" @Revision:    0.0.109
+" @Revision:    0.0.123
 
 
 if !exists('g:tmarks_handlers') "{{{2
@@ -120,38 +120,24 @@ endf
 
 
 function! tmarks#Next(count) "{{{3
-    let cnt = a:count
     let cul = line('.')
-    " TLogVAR cnt, cul
+    " TLogVAR a:count, cul
     let lines = keys(s:GetLocalMarks(0))
     if !empty(lines)
         call map(lines, 'printf("%99s", v:val)')
         call sort(lines)
         call map(lines, '0 + matchstr(v:val, ''\d\+'')')
         " TLogVAR lines
-        if cnt > 0
+        if a:count > 0
             let lines = filter(copy(lines), 'v:val > cul')
                         \ + filter(copy(lines), 'v:val <= cul')
-            while cnt > 1
-                " TLogVAR cnt, lines
-                let lines = add(lines[1 : -1], lines[0])
-                let cnt -= 1
-            endwh
-        elseif cnt < 0
+            exec lines[(a:count - 1) % len(lines)]
+        elseif a:count < 0
             let lines = reverse(filter(copy(lines), 'v:val < cul'))
                         \ + reverse(filter(copy(lines), 'v:val >= cul'))
-            while cnt < -1
-                " TLogVAR cnt, lines
-                let lines = add(lines[1 : -1], lines[0])
-                let cnt += 1
-            endwh
+            exec lines[(-a:count - 1) % len(lines)]
         endif
-        " TLogVAR lines
-        let line = lines[0]
-        " TLogVAR line
-        exec line
     endif
 endf
-
 
 
