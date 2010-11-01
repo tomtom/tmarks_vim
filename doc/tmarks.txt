@@ -37,7 +37,7 @@ please make sure, you have the current version of vimball
 
 This script requires tlib (vimscript #1863) to be installed.
 
-Also available via git: http://github.com/tomtom/vimtlib/
+Also available via git: http://github.com/tomtom/tmarks_vim/
 
 
 ========================================================================
