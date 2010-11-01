@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-08-23.
-" @Last Change: 2010-10-23.
-" @Revision:    0.0.65
+" @Last Change: 2010-10-24.
+" @Revision:    0.0.67
 " GetLatestVimScripts: <+SCRIPTID+> 1 tmarks.vim
 
 if &cp || exists("loaded_tmarks")
@@ -43,7 +43,7 @@ command! -bar TMarksdeleteall call tmarks#DeleteAllMarks()
 command! -count=1 -bar TMarksnext call tmarks#Next(<count>)
 
 
-echom exists('g:tmarks_key')
+" @TPluginInclude
 if exists('g:tmarks_key')
     exec 'map <silent> <'. g:tmarks_key .'> :<c-u>call tmarks#Next(v:count1)<cr>'
     exec 'map <silent> <s-'. g:tmarks_key .'> :<c-u>call tmarks#Next(-v:count1)<cr>'
