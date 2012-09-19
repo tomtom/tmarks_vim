@@ -3,9 +3,9 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-08-23.
-" @Last Change: 2010-10-24.
-" @Revision:    0.0.67
-" GetLatestVimScripts: <+SCRIPTID+> 1 tmarks.vim
+" @Last Change: 2010-11-01.
+" @Revision:    69
+" GetLatestVimScripts: 2594 0 tmarks.vim
 
 if &cp || exists("loaded_tmarks")
     finish
