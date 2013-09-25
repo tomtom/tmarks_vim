@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2009-03-29.
-" @Last Change: 2010-10-23.
-" @Revision:    0.0.123
+" @Last Change: 2013-09-25.
+" @Revision:    0.0.135
 
 
 if !exists('g:tmarks_handlers') "{{{2
@@ -15,11 +15,24 @@ if !exists('g:tmarks_handlers') "{{{2
 endif
 
 
+function! s:UpdateQFS() "{{{3
+    if !exists('*QuickfixsignsUpdate')
+                \ || index(keys(g:quickfixsigns_lists), 'marks') == -1
+                \ || exists("b:noquickfixsigns")
+                \ || expand('%:t') =~ g:quickfixsigns_blacklist_buffer
+                \ || (exists('b:quickfixsigns_ignore') && index(b:quickfixsigns_ignore, 'marks') != -1)
+        return
+    endif
+    call QuickfixsignsUpdate('marks')
+endf
+
+
 " :nodoc:
 function! tmarks#AgentDeleteMark(world, selected) "{{{3
     for l in a:selected
         call s:DelMark(s:GetMark(l))
     endfor
+    call s:UpdateQFS()
     let a:world.base  = s:GetList()
     let a:world.state = 'display'
     return a:world
@@ -74,6 +87,7 @@ function! tmarks#DeleteInRange(...) "{{{3
             call s:DelMark(mark)
         endif
     endfor
+    call s:UpdateQFS()
 endf
 
 
@@ -83,6 +97,7 @@ function! tmarks#DeleteAllMarks() "{{{3
     for mark in keys(s:GetLocalMarks(1))
         call s:DelMark(mark)
     endfor
+    call s:UpdateQFS()
 endf
 
 
@@ -102,6 +117,7 @@ function! tmarks#ToggleMarkAtLine(...) "{{{3
         let mark = lines[line]
         call s:DelMark(mark)
         echom 'Remove mark' mark 'at line' line
+        call s:UpdateQFS()
         return
     else
         let marks = s:GetLocalMarks(1)
@@ -109,6 +125,7 @@ function! tmarks#ToggleMarkAtLine(...) "{{{3
             if !has_key(marks, mark)
                 exec line .'mark '. mark
                 echom 'Set mark' mark 'at line' line
+                call s:UpdateQFS()
                 return
             endif
         endfor
